@@ -1,0 +1,1329 @@
+/*
+CSD-460 Capstone Blue Team
+Moffat Bay Lodge Project
+Vee Bell, Deja Faison, Julia Gonzalez, Jess Monnier
+Professor Sue Sampson
+Developed October thru December of 2025
+*/
+
+/* Styling */
+html {
+    /* Ensures html element takes up full height of the browser window */
+    height: 100%;
+}
+
+body {
+    /* Ensures body takes up at least the full viewport height */
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+
+    /* Your background styles */
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 232, 163, 1) 100%);
+    background-repeat: no-repeat; /* Prevents repeating */
+    background-size: cover; /* Ensures the image aspect ratio is maintained */
+    background-attachment: fixed;
+}
+
+#content {
+    margin: 10px 30px 10px 30px;
+}
+
+/* Header/Nav Bar */
+header {
+    background-color: #001f3f; /* navy blue */
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    height: 40px;
+}
+
+/* Logo overlaps nav and content */
+header img.logo {
+    position: absolute;  /* overlap navbar */
+    left: 10px;
+    top: -20px;          /* adjust so it’s not cut off */
+    width: 200px;
+    height: 200px;
+    object-fit: contain;  /* keeps aspect ratio */
+    box-shadow: none;     /* remove any shadow */
+    border: none;         /* remove any border */
+}
+
+/* Nav menu */
+header nav {
+    margin-left: auto;
+    z-index: 15; /* above header background but below logo if needed */
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    align-items: center;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+header nav ul li a:hover,
+header nav ul li a.active {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.error-message {
+    color: red;
+    background-color: #ffe6e6;
+    border: 1px solid red;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.success-message {
+    color: green;
+    background-color: #e6ffe6;
+    border: 1px solid green;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.info-message {
+    background-color: #f1e680;
+    color: #5c5518;
+    border: 1px solid #5c5518;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.logout-button {
+    background: none;       /* remove background */
+    border: none;           /* remove border */
+    color: white;
+    cursor: pointer;        /* show pointer on hover */
+    font: inherit;
+    font-weight: bold;
+    padding: 0;             /* remove default padding */
+    margin: 0;              /* remove default margin */
+    text-decoration: none;  /* remove underline */
+}
+
+.logout-button:hover {
+    text-decoration: underline; /* optional: mimic link hover */
+}
+
+/* Add top margin to main so content is not hidden under overlapping logo */
+main {
+    margin-top: 100px; /* give enough space for the overlapping logo */
+}
+
+/* Footer styling */
+#pad {
+    height: 50px;
+}
+
+footer {
+    position: fixed;   /* Fix to viewport */
+    bottom: 0;         /* Stick to bottom */
+    left: 0;           /* Stretch across the page */
+    width: 100%;       /* Full width */
+    background-color: #001f3f; /* Same as navbar */
+    color: white;      /* Text color */
+    text-align: center;
+    height: 40px;
+    padding: 1rem 0;
+    z-index: 1000;     /* Ensure it sits above other content */
+}
+
+/* Landing Page */
+/* Hero Section */
+.hero {
+    width: 100%;
+    height: 40vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-inner {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    height: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Left: Text with oceany-blue background */
+.hero-text {
+    flex: 1;
+    background: linear-gradient(to bottom, #0077b6, #00b4d8); /* oceany-blue gradient */
+    color: white;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+}
+
+.hero-text h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.hero-text p {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+}
+
+.hero-text .btn {
+    background-color: #ffb703;
+    color: #001f3f;
+    font-weight: bold;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.hero-text .btn:hover {
+    background-color: #faa307;
+    transform: translateY(-2px);
+}
+
+/* Right: Whale background */
+.hero-image-container {
+    flex: 1;
+    background-image: url("images/whale.png");
+    background-size: cover;       /* Fill div completely */
+    background-position: center;  /* Keep whale centered */
+    background-repeat: no-repeat;
+}
+
+/* Responsive adjustments */
+@media(max-width: 900px) {
+    .hero-inner {
+        flex-direction: column-reverse;
+        height: auto;
+    }
+    .hero-text {
+        text-align: center;
+        padding: 40px 20px;
+    }
+    .hero-text h1 {
+        font-size: 2.2rem;
+    }
+    .hero-text p {
+        font-size: 1rem;
+    }
+    .hero-image-container {
+        height: 300px; /* fixed height on mobile */
+    }
+}
+/*Index Rooms and Suites Section*/
+/* Individual Suite card */
+.roomCard {
+    width: 280px;                   /* card width */
+    background: #ffffffd0;          /* soft white background */
+    border-radius: 10px;
+    overflow: hidden;               /* keeps image corners rounded */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 15px;           /* spacing under content */
+
+}
+
+/* Hover effect */
+.roomCard:hover {
+    transform: translateY(-5px);    /* lift up slightly */
+    box-shadow: 0 6px 14px rgba(0,0,0,0.20);
+}
+
+.roomTitle h3{
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.roomCard h4{
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.roomCard a{
+    padding: 12px 25px;
+}
+.roomCard .btn {
+  display: block;
+  text-align: center;
+  margin: 16 5px;
+  padding: 14px;
+  background-color: #3b82f6;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.roomContainer{
+    display: flex;
+    flex-wrap: wrap;               /* allows multiple cards per row */
+    gap: 30px;                     /* space between cards */
+    justify-content: center;       /* center them on the page */
+    padding: 20px; 
+}
+
+
+/* Card image */
+.roomCard img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;              /* crops nicely */
+    display: block;
+    border-radius: 6px;
+}
+/*Index About Us*/
+/* Inner flex container */
+.indexAboutContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 40px;
+}
+
+/* Text column */
+.indexAboutText {
+    flex: 2;
+}
+
+.indexAboutText h3 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.indexAboutText p {
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 700px;
+}
+
+/* Image column */
+.indexAboutImage {
+    flex: 1;
+    text-align: center;
+}
+
+.indexAboutImage img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 12px;
+    opacity: 0.85;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+.salmon-container {
+    text-align: center; /* center the image horizontally */
+    margin-top: 40px;   /* spacing from content above */
+}
+
+.salmon-img {
+    width: 20%;         /* 40% of original size */
+    opacity: 0.25;       /* 30% transparent */
+    display: inline-block;
+}
+
+/* Login page */
+.loginForm label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    padding-right: 15px;
+}
+.loginForm input, .reservationForm select {
+    display: inline-block;
+    width: 220px;
+    margin-bottom: 10px;
+    padding: 5px;
+    height: 35px;
+    border-width: 1px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.loginPanel {
+    background-color: white;
+    width: 450px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Small unobtrusive icon inside the password field */
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 40%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.password-toggle:hover {
+    opacity: 1;
+}
+
+/* Register page */
+.registerPanel {
+    background-color: white;
+    width: 500px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.registerPanel h3 {
+    text-align: center;
+}
+
+#registerForm label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    padding-right: 15px;
+}
+
+#registerForm input {
+    display: inline-block;
+    width: 220px;
+    margin-bottom: 10px;
+    padding: 5px;
+    height: 25px;
+    border-width: 1px;
+    border-radius: 5px;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-row label {
+    width: 150px;
+    text-align: right;
+    padding-right: 15px;
+}
+
+.form-row input {
+    width: 220px;
+    padding: 5px;
+    height: 25px;
+    border-radius: 5px;
+}
+
+.input-with-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.passwordRequirments{
+    font-size: 12px;
+    margin-left: 20%;
+}
+
+.terms {
+    text-align: center;
+    padding: 10px;
+}
+
+.terms label {
+    width: auto;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.terms input {
+    width: auto;
+    margin-left: 5px;
+}
+
+.submitButton {
+    display: block;
+    margin: auto;
+    width: 200px;
+    height: 30px;
+    border-radius: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.submitButton:disabled {
+    background-color: #aaa;  /* greyed out */
+    color: #666;             /* darker text */
+    cursor: not-allowed;     /* shows the "no" cursor */
+    opacity: 0.6;            /* slightly transparent */
+    pointer-events: none;    /* optional, prevents accidental clicks */
+}
+
+.submitButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+}
+
+.submitButton:not(:disabled):hover {
+    background-color: #6de771;
+}
+
+
+.bad { color: red; }
+.good { color: green; }
+
+
+/* About Section */
+.centerContent {
+    display: flex;
+    align-items: flex-start;   /* aligns the top of the text and slideshow */
+    gap: 20px;                 /* spacing between the text and slideshow */
+    justify-content: center;   /* centers both together on the page */
+    margin-top: 30px;
+}
+
+#aboutCenterText {
+    max-width: 300px;
+    padding-left: 20px;          
+    flex: 1;
+}
+
+.slideShowContainer {
+    display: flex;
+    position: relative;
+    align-items: center;
+    gap: 10px;
+    margin: auto;
+}
+.slide{
+    display: none;
+    padding-left: 10px;
+}
+
+.slide img {
+    display: block;
+    width: 500px;
+    height: 200px;
+    border-radius: 6px;
+}
+
+.previousButton, .nextButton {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    border-radius: 80px;
+    user-select: none;
+    transition: transform 0.3s ease;
+    
+}
+.previousButton {
+    left: -50px;
+}
+
+.nextButton {
+    right: -50px;
+}
+
+.previousButton:hover, .nextButton:hover {
+   transform: translateY(-10px);
+}
+
+.slideCaption {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+#bookNowButton {
+    margin: 40px auto;
+    padding: 20px 20px;
+    position: absolute;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#bookNowButton:hover {
+    background-color: #45a049;
+}
+
+.emptySpace{
+    height: 150px;
+    width: 100%;
+}
+
+/*Contact Section*/
+.contactInfo {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    width: 400px;
+}
+
+.contactUsContainer{
+    display: flex;
+    margin-bottom: 90px;
+}
+
+.contactForm {
+    background-color: white;
+    padding: 20px 30px;   /* added padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: auto;
+}
+
+.contactForm h3{
+    text-align: center;
+}
+
+.contactForm label {
+    display: inline-block;
+    text-align: right;
+}
+
+.contactForm input, .contactForm textarea {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-width: 1px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Reservation stuff */
+
+.reservationPanel h3{
+    text-align: center;
+}
+
+/* Common button styles */
+.reservation-button {
+    display: inline-block;          /* allow them to sit side by side */
+    width: 180px;
+    height: 40px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 10px;             /* space between buttons */
+    text-align: center;
+}
+
+/* Reserve (green) button */
+.reserve-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.reserve-button:hover {
+    background-color: #6de771;
+}
+
+/* Hold (neutral) button */
+.hold-button {
+    background-color: #888;         /* greyish neutral */
+    color: white;
+}
+
+.hold-button:hover {
+    background-color: #aaa;         /* slightly lighter on hover */
+}
+
+/* Disabled state (shared) */
+.reservation-button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.form-buttons {
+    text-align: center;
+}
+
+/* Login or register buttons */
+/* Primary button: matches the bold, rounded, high-contrast style */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    background-color: #4CAF50; /* green like reserve-button */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none; /* if used as <a> */
+}
+
+.btn:hover:not(:disabled) {
+    background-color: #6de771; /* lighter green on hover */
+    transform: translateY(-1px);
+}
+
+.btn:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Secondary button: neutral style for Register, similar to hold-button */
+.btn.btn-secondary {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    background-color: #888; /* grey like hold-button */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn.btn-secondary:hover:not(:disabled) {
+    background-color: #aaa; /* slightly lighter grey on hover */
+    transform: translateY(-1px);
+}
+
+.btn.btn-secondary:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Table styling */
+table.reservation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+table.reservation-table th,
+table.reservation-table td {
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    text-align: center;
+}
+
+table.reservation-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+table.reservation-table tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+table.reservation-table tr:hover {
+    background-color: #f1f7ff;
+}
+
+.reservationForm label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    padding-right: 15px;
+}
+.reservationForm input, .reservationForm select {
+    display: inline-block;
+    width: 220px;
+    margin-bottom: 10px;
+    padding: 5px;
+    height: 35px;
+    border-width: 1px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.reservationPanel {
+    background-color: white;
+    width: 500px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Account Panel Container */
+.accountPanel {
+    background-color: #ffffff;       /* White card background */
+    max-width: 700px;                /* Limit width for readability */
+    margin: 40px auto;               /* Center on page with spacing */
+    padding: 30px 40px;              /* Comfortable padding */
+    border-radius: 10px;             /* Rounded corners */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Subtle shadow */
+}
+
+/* Headings */
+.accountPanel h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #001f3f;                  /* Match header/nav color */
+}
+
+.accountPanel h3 {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Form styling */
+.account-form label,
+.password-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.account-form input,
+.password-form input {
+    width: 100%;                      /* Full width inside panel */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+/* Account buttons */
+.account-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.account-button:hover:not(:disabled) {
+    background-color: #6de771;
+}
+
+.account-button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+/* Password requirements box */
+.passwordRequirments {
+    background-color: #f9f9f9;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    margin-bottom: 15px;
+}
+
+.passwordRequirments p {
+    margin: 5px 0;
+}
+
+/* Reservation table adjustments */
+.recent-reservations {
+    margin-top: 40px;
+}
+
+.label-toggle {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* space between label and toggle */
+}
+
+.account-password-toggle {
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.2em;
+    transform: translateY(-4px);
+}
+
+/*Attractions Page*/
+.travelWarning{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgb(245, 245, 245);
+    padding: 30px;
+    outline: #000 1px solid;
+    border-radius: 10px;
+}
+
+.travelWarning p {
+    display: inline;       /* make the paragraph inline */
+   
+
+}
+
+.travelWarning img{
+    height: 50px;
+}
+
+/* Container that holds all attraction cards */
+.attractionsContainer {
+    display: flex;
+    flex-wrap: wrap;               /* allows multiple cards per row */
+    gap: 30px;                     /* space between cards */
+    justify-content: center;       /* center them on the page */
+    padding: 20px;
+}
+
+
+/* Individual attraction card */
+.attractionCard {
+    width: 280px;                   /* card width */
+    background: #ffffffd0;          /* soft white background */
+    border-radius: 10px;
+    overflow: hidden;               /* keeps image corners rounded */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;             /* center heading & text */
+    padding-bottom: 15px;           /* spacing under content */
+}
+
+/* Hover effect */
+.attractionCard:hover {
+    transform: translateY(-5px);    /* lift up slightly */
+    box-shadow: 0 6px 14px rgba(0,0,0,0.20);
+}
+
+
+/* Card image */
+.attractionCard img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;              /* crops nicely */
+    display: block;
+}
+
+
+/* Caption under the image */
+.attractionCard figcaption {
+    font-size: 0.75rem;
+    margin-top: 5px;
+    color: #444;
+}
+
+.attractionCard figcaption a {
+    color: #4466aa;
+    text-decoration: none;
+}
+
+.attractionCard figcaption a:hover {
+    text-decoration: underline;
+}
+
+
+/* Title */
+.attractionCard h4 {
+    margin: 10px 0 5px;
+    font-size: 1.2rem;
+    color: #2b2b2b;
+}
+
+
+/* Description text */
+.attractionCard p {
+    font-size: 0.95rem;
+    margin: 0 12px;
+    color: #333;
+}
+
+/* ----------------------------------
+   Status-based row styling
+---------------------------------- */
+
+table.reservations-account {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+table.reservations-account th,
+table.reservations-account td {
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    text-align: center;
+}
+
+table.reservations-account th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* Confirmed: pale green */
+.search-Confirmed {
+    background-color: #d9f7e0;
+}
+
+/* Hold: pale yellow */
+.search-Hold {
+    background-color: #fff6dc;
+}
+
+/* Canceled: pale red / gray */
+.search-Cancelled {
+    background-color: #f3cccc;
+    color: #6b2a2a;
+}
+
+/* Hover enhancement (optional but nice) */
+tbody tr:hover {
+    background-color: #eef2f7;
+}
+
+/* Reservation Details Updated Styles */
+  .wrap {
+    max-width: 920px;
+    margin: 18px auto;
+    padding: 18px;
+  }
+
+  .page-card {
+    border: 1px solid #d9d9d9;
+    border-radius: 12px;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .page-header {
+    padding: 16px 18px;
+    border-bottom: 1px solid #e8e8e8;
+    background: #f4f7fb;
+  }
+
+  .page-header h2 { margin: 0; }
+  .page-header p { margin: 6px 0 0; color: #444; }
+
+  .content {
+    padding: 18px;
+    background: #fafafa;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  @media (max-width: 740px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 14px 14px 10px;
+  }
+
+  .card h3 {
+    margin: 0 0 10px;
+    font-size: 1.05rem;
+  }
+
+  .list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  .list li { margin: 6px 0; color: #222; }
+  .muted { color: #555; }
+
+  .pill {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 0.92rem;
+    border: 1px solid #cfcfcf;
+    background: #f7f7f7;
+  }
+  .pill.Confirmed { border-color: #87c38f; background: #eef9f0; }
+  .pill.Hold      { border-color: #e6c36a; background: #fff7e5; }
+  .pill.Cancelled { border-color: #d99292; background: #fff0f0; }
+
+  .alert {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid;
+    margin: 10px 0 14px;
+    font-weight: 650;
+    background: #fff;
+  }
+  .alert.error   { border-color: #b00020; background: #ffe5e8; color: #7a0014; }
+  .alert.success { border-color: #2f7a3d; background: #e9f7ee; color: #165a25; }
+  .alert.warn    { border-color: #e6c36a; background: #fff7e5; color: #6b5208; }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0 0;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 9px 12px;
+    border-radius: 10px;
+    border: 1px solid #1f3d62;
+    background: #2b4f7a;
+    color: #fff;
+    font-weight: 800;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .btn:hover { filter: brightness(0.96); }
+
+  .btn.secondary {
+    background: #fff;
+    color: #1f3d62;
+  }
+
+  .btn.danger {
+    background: #b00020;
+    border-color: #7a0014;
+  }
+
+  .btn.success {
+    background: #28a745;
+    border-color: #1f7c34;
+  }
+
+  .btn.small { padding: 8px 10px; border-radius: 9px; }
+
+  .row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+
+  .row > .btn {
+  height: 35px;
+  margin-bottom: 12px;
+  white-space: nowrap;
+}
+
+  .field {
+    flex: 1 1 240px;
+  }
+
+  .field label {
+    display: block;
+    font-weight: 800;
+    margin: 0 0 6px;
+  }
+
+  .field input {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #cfcfcf;
+    border-radius: 10px;
+    outline: none;
+  }
+
+  .field input:focus {
+    border-color: #2b4f7a;
+    box-shadow: 0 0 0 2px rgba(43, 79, 122, 0.15);
+  }
+
+  .section-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 0 0 10px;
+  }
+
+  .divider { margin: 14px 0; border: none; border-top: 1px solid #e7e7e7; }
+
+  .total {
+    font-size: 1.15rem;
+    font-weight: 900;
+  }
+
+  .fineprint {
+    margin-top: 12px;
+    font-size: 0.92rem;
+    color: #555;
+  }
+
+  /* Search Updated Styles */
+    .lookup-wrap { margin-top: 10px; }
+  .lookup-title { margin: 0 0 10px; }
+
+  .alert {
+    margin: 12px 0 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #b94a48;
+    background: #fff4f4;
+    color: #7a1f1f;
+    font-weight: 600;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(260px, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+  }
+
+  @media (max-width: 980px) {
+    .grid { grid-template-columns: repeat(2, minmax(260px, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    padding: 16px;
+    background: #fff;
+  }
+
+  .card h3 { margin: 0 0 6px; }
+  .card p  { margin: 0 0 14px; color: #444; }
+
+  .field { 
+    margin: 0 0 12px;
+    padding: 0 20px 0 0;
+ }
+  .field label { display: block; margin: 0 0 6px; font-weight: 700; }
+  .field input {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #cfcfcf;
+    border-radius: 8px;
+    outline: none;
+  }
+  .field input:focus {
+    border-color: #2b4f7a;
+    box-shadow: 0 0 0 2px rgba(43, 79, 122, 0.15);
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1px solid #1f3d62;
+    background: #2b4f7a;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .btn:hover { filter: brightness(0.95); }
+
+  .divider { margin: 26px 0 14px; }
+
+  .results-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .table-wrap { overflow-x: auto; margin-top: 10px; }
+  table.results {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 860px;
+  }
+  table.results th, table.results td {
+    border-bottom: 1px solid #e6e6e6;
+    padding: 10px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.results thead th {
+    position: sticky;
+    top: 0;
+    background: #f4f7fb;
+    border-bottom: 1px solid #d8e3f3;
+    font-weight: 800;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    border: 1px solid #cfcfcf;
+    background: #f7f7f7;
+  }
+  .badge.Confirmed { border-color: #87c38f; background: #eef9f0; }
+  .badge.Hold      { border-color: #e6c36a; background: #fff7e5; }
+  .badge.Canceled  { border-color: #d99292; background: #fff0f0; }
+
+  .muted { color: #555; font-size: 0.95rem; }

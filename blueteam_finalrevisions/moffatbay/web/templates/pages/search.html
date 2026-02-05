@@ -1,0 +1,153 @@
+<!--
+CSD-460 Capstone Blue Team
+Moffat Bay Lodge Project
+Vee Bell, Deja Faison, Julia Gonzalez, Jess Monnier
+Professor Sue Sampson
+Developed October thru December of 2025
+-->
+
+{% extends "pages/base.html" %}
+
+{% block title %}Reservation Search | Moffat Bay Lodge{% endblock %}
+
+{% block content %}
+
+<div class="lookup-wrap">
+  <h2 class="lookup-title">Reservation Search</h2>
+
+  {% if lookup_error %}
+    <div class="alert">{{ lookup_error }}</div>
+  {% endif %}
+
+  <div class="grid-3">
+
+    <!-- Option A: Search by Email -->
+    <div class="card">
+      <h3>Search by Email</h3>
+      <p>Find all reservations associated with your account email.</p>
+
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="search_type" value="email">
+
+        <div class="field">
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value="{{ form_email|default:request.user.email }}"
+            required
+            autocomplete="email"
+          >
+        </div>
+
+        <button class="btn" type="submit">Search</button>
+      </form>
+    </div>
+
+    <!-- Option B: Search by Name -->
+    <div class="card">
+      <h3>Search by Name</h3>
+      <p>Search your reservations using your first and/or last name.</p>
+
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="search_type" value="name">
+
+        <div class="field">
+          <label for="first_name">First name</label>
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            value="{{ form_first_name }}"
+            autocomplete="given-name"
+          >
+        </div>
+
+        <div class="field">
+          <label for="last_name">Last name</label>
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            value="{{ form_last_name }}"
+            autocomplete="family-name"
+          >
+        </div>
+
+        <button class="btn" type="submit">Search</button>
+      </form>
+    </div>
+
+    <!-- Option C: Search by Reservation ID -->
+    <div class="card">
+      <h3>Search by Reservation ID</h3>
+      <p>Enter your reservation ID to quickly find a reservation.</p>
+
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="search_type" value="reservation_id">
+
+        <div class="field">
+          <label for="reservation_id">Reservation ID</label>
+          <input
+            type="text"
+            id="reservation_id"
+            name="reservation_id"
+            value="{{ form_reservation_id }}"
+            required
+            autocomplete="off"
+          >
+        </div>
+
+        <button class="btn" type="submit">Search</button>
+      </form>
+    </div>
+
+  </div>
+
+  {% if results %}
+    <hr class="divider">
+    <div class="results-head">
+      <h3 style="margin:0;">Your Reservations</h3>
+      <span class="muted">{{ results|length }} result{{ results|length|pluralize }}</span>
+    </div>
+
+    <div class="table-wrap">
+      <table class="results">
+        <thead>
+          <tr>
+            <th>Reservation #</th>
+            <th>Guest</th>
+            <th>Room Type</th>
+            <th>Check-in</th>
+            <th>Check-out</th>
+            <th>Guests</th>
+            <th>Total Cost</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in results %}
+            <tr>
+              <td>
+                <a href="{% url 'reservation_detail' r.public_id %}">{{ r.public_id }}</a>
+              </td>
+              <td>{{ r.guest_first_name }} {{ r.guest_last_name }}</td>
+              <td>{{ r.room_type.name }}</td>
+              <td>{{ r.start_date }}</td>
+              <td>{{ r.end_date }}</td>
+              <td>{{ r.guests }}</td>
+              <td>${{ r.total_cost }}</td>
+              <td><span class="badge {{ r.status }}">{{ r.status }}</span></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+</div>
+
+{% endblock %}

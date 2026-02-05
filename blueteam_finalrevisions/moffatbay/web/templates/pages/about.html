@@ -1,0 +1,150 @@
+<!--
+CSD-460 Capstone Blue Team
+Moffat Bay Lodge Project
+Vee Bell, Deja Faison, Julia Gonzalez, Jess Monnier
+Professor Sue Sampson
+Developed October thru December of 2025
+-->
+
+{% extends 'pages/base.html' %}
+{% load static %}
+{% block title %}Home | Moffat Bay Lodge{% endblock %}
+
+{% block content %}
+    <div class = "aboutUsContent">
+        <div class = "aboutUsTopPanel">
+            <h2>About Us</h2>
+            <p>Moffat Bay, a place of adventure and relaxation for everyone.
+                 It's a great new place to enjoy the beauty of the Pacific Northwest.</p>
+            <img>
+        </div><!--End of top panel-->
+
+        <div class = "centerContent">
+            <div id= "aboutCenterText">
+                <h3>Moffat Bay Lodge</h3>
+                <ul>
+                    <li>Newly built eco-friendly resort</li>
+                    <li> Cabin Style Accommodations overlooking the bay</li>
+                    <li> Farm to table resturnant that features locally sourced ingredients</li>
+                    <li> Full service spa and wellness center</li>
+                    <li> Outdoor activities including hiking, kayaking, and fishing</li>
+                    <li> Tours guided by local experts to explore the natural beauty of the area</li>
+                </ul>
+            <a href="{% url 'reservation' %}" id="bookNowButton">Book Now</a> 
+            <br>
+            </div><!--End of aboutCenterText-->
+
+            <div class = "slideShowContainer">
+                <!--SlideButton-->
+                <a class = "previousButton" onclick="plusSlides(-1)"><img src="{% static 'web/images/previousIcon.png' %}" alt="Previous"
+                    Style="width:50px; height:auto;"> </a>
+                
+                <div class= "slide">
+                    <img class="slideImage" 
+                        src="{% static 'web/images/lakeOverViewImage.jpg' %}" alt="Lake view"
+                        Style="width:500px; height:auto;">
+                    <caption id = "slideCaption"> Secenic overview of one of our many hike trails</caption>
+                </div>
+
+                <div class= "slide">
+                    <img class="slideImage" 
+                        src="{% static 'web/images/hikeTrail.jpg' %}" alt="Trail view"
+                        Style="width:500px; height:auto;">
+                    <caption class = "slideCaption"> Relaxing quiet hiking trail</caption>
+                </div>
+
+                <div class= "slide">
+                    <img class="slideImage" 
+                        src="{% static 'web/images/kayaking.jpg' %}" alt="kayaking view"
+                        Style="width:500px; height:auto;">
+                    <caption class = "slideCaption"> Guided kayaking tours on the bay</caption>
+                </div>
+
+                <div class= "slide">
+                    <img class="slideImage" 
+                        src="{% static 'web/images/lodgePorch.jpg' %}" alt="Porch view"
+                        Style="width:500px; height:auto;">
+                    <caption class = "slideCaption">Large wrap around porch perfect for sitting under the stars</caption>
+                </div>
+                <!--Slide buttons-->
+
+                <a class = "nextButton" onclick="plusSlides(1)"><img src="{% static 'web/images/nextIcon.png' %}" alt="Next"
+                    Style="width:50px; height:auto;"> </a>
+            </div><!--End of slideShowContainer-->
+        </div><!--End of Center content-->
+
+        <!--Spacing-->
+        <div class = "emptySpace">
+        </div>
+
+        <div class="contactInfo">
+            <h3>Contact Us</h3>
+            <ul>
+                <li><strong>By Phone</strong>: 555-555-5555</li>
+                <li><strong>By Email</strong>: Please use the form below</li>
+                <li><strong>By Mail</strong>: 129 Bay Drive, Moffat Bay, WA 93412</li>
+        </div>
+
+        <!-- Display success/error messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="{% if message.tags %}{{ message.tags }}-message{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!--Contact Us -->
+
+        <div class="contactUsContainer">
+            <form method="post" class="contactForm">
+                {% csrf_token %}
+                <h2>Share your thoughts!</h2>
+                <p>Please fill out the form below to get in touch:</p>
+                
+                {% for field in form %}
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label><br>
+                    {{ field }}<br>
+                    {% if field.errors %}
+                        <span class="error-message">{{ field.errors }}</span><br>
+                    {% endif %}
+                {% endfor %}
+                
+                <input type="submit" class="submitButton" value="Send Message" style="width: 150px;">
+            </form>
+        </div>
+        <!--Contact Us Form-->
+
+        <!--JavaScript for Slide Show-->
+        <script>
+            let slideIndex = 1;
+            showSlides(slideIndex);
+
+            //Button Controls
+            function plusSlides(n){
+                showSlides(slideIndex += n);
+            }
+
+            function currentSlide(n){
+                showSlides(slideIndex = n);
+            }
+
+            function showSlides(n){
+                let i;
+                let slides = document.getElementsByClassName("slide");
+
+                if (n > slides.length) { slideIndex = 1 }
+                if (n < 1) { slideIndex = slides.length }
+
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+
+                slides[slideIndex - 1].style.display = "block";
+            }
+        </script>
+    </div><!--End of About Us content-->
+
+    <!--Slide Show Section by W3Schools-->
+    <!--Icons by: Ilham Fitrotul Hayat-->
+{% endblock %}

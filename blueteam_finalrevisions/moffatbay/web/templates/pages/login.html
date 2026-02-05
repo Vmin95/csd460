@@ -1,0 +1,74 @@
+<!--
+CSD-460 Capstone Blue Team
+Moffat Bay Lodge Project
+Vee Bell, Deja Faison, Julia Gonzalez, Jess Monnier
+Professor Sue Sampson
+Developed October thru December of 2025
+-->
+
+{% extends 'pages/base.html' %}
+
+{% block title %}Login | Moffat Bay Lodge{% endblock %}
+
+{% block content %}
+<div class="registerPanel">
+  <h2>Login</h2>
+
+  {% if form.errors %}
+    <p style="error-message">Please check your username and password.</p>
+  {% endif %}
+
+  {% if messages %}
+      {% for message in messages %}
+          <div class="{{ message.tags }}-message">{{ message }}</div>
+      {% endfor %}
+  {% endif %}
+<div class=loginForm>
+<form method="post">
+  {% csrf_token %}
+
+  <p>
+    <label for="{{ form.username.id_for_label }}">Email:</label>
+    {{ form.username }}
+  </p>
+
+<p style="position: relative;">
+  <label for="{{ form.password.id_for_label }}">Password:</label>
+
+  <input 
+      type="password" 
+      name="{{ form.password.name }}" 
+      id="password-field"
+      required
+  >
+
+  <span id="togglePassword" class="password-toggle" title="Show password">
+      👁️
+  </span>
+</p>
+
+  <button class="submitButton" type="submit">Login</button>
+</form>
+</div>
+
+  <p align="center">Don't have an account yet?
+    <a href="{% url 'register' %}">Register here</a>.
+  </p>
+
+</div>
+
+<script>
+document.getElementById("togglePassword").addEventListener("click", function () {
+    const passwordField = document.getElementById("password-field");
+    const isHidden = passwordField.type === "password";
+    passwordField.type = isHidden ? "text" : "password";
+
+    // swap icon
+    this.textContent = isHidden ? "🙈" : "👁️";
+
+    // Update hover text
+    this.title = isHidden ? "Hide password" : "Show password";
+});
+</script>
+
+{% endblock %}
